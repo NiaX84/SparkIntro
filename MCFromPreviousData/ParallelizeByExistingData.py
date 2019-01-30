@@ -5,27 +5,28 @@ from random import choice
 import string
 
 
-def prepare_simulation(seed, n_trials, original_data_sequence):
-    random_state = np.random(seed)
-    simulation_matrix = random_state.choice(original_data_sequence, size=n_trials)
+def prepare_simulation(seed, n_iterations, original_data_sequence):
+    random_state = np.random.RandomState(seed)
+    simulation_matrix = random_state.choice(original_data_sequence, size=n_iterations)
     return simulation_matrix
         
 
 if __name__ == '__main__':
-    # spark_session = SparkSession.builder.master('local[*]').getOrCreate()
-    # sc = spark_session.sparkContext
+    spark_session = SparkSession.builder.master('local[*]').getOrCreate()
+    sc = spark_session.sparkContext
 
     norm_1 = norm(loc=0, scale=1)
-    sample = np.sort(norm_1.rvs(10000))
+    sample = np.sort(norm_1.rvs(100000))
     
-    n_trials = 100
-    n_simulations = 1000
+    n_trials = 1000
+    n_simulations = 10000
     
-    seeds = [int.from_bytes(bytearray(''.join(choice(string.ascii_lowercase) for _ in range(4)), encoding='utf-8'), 'big')]
-    for seed in seeds:
-        prepare_simulation(seed, 100, sample)
+    seeds = [int.from_bytes(bytearray(''.join(choice(string.ascii_lowercase) for _ in range(4)), encoding='utf-8'), 'big') for _ in range(n_trials)]
     
-    # simulation_matrix = sc.parallelize(seeds).map(lambda x: prepare_simulation(x, n_trials, sample))
-    # combined_simulation = simulation_matrix.collect()
+    simulation_matrix = sc.parallelize(seeds).map(lambda x: prepare_simulation(x, n_simulations, sample))
+    combined_simulation = simulation_matrix.collect()
     
-    # spark_session.stop()
+    spark_session.stop()
+    
+    print(combined_simulation[0])
+    
