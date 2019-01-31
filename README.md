@@ -37,9 +37,15 @@ https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.
 # Parallelism in spark
 
 http://www.openkb.info/2018/06/how-to-control-parallelism-of-spark-job.html
+
 http://www.openkb.info/2015/06/resource-allocation-configurations-for.html
+
 https://www.learningjournal.guru/article/apache-spark/apache-spark-parallel-processing/
+
 https://blog.cloudera.com/blog/2015/03/how-to-tune-your-apache-spark-jobs-part-2/
+
 https://dzone.com/articles/apache-spark-performance-tuning-degree-of-parallel
+
 https://umbertogriffo.gitbooks.io/apache-spark-best-practices-and-tuning/content/sparksqlshufflepartitions_draft.html
+
 https://spark.apache.org/docs/latest/configuration.html
